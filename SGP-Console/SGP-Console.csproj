@@ -11,5 +11,4 @@
   <ItemGroup>
     <ProjectReference Include="..\SGP-Application\SGP-Application.csproj" />
   </ItemGroup>
-
 </Project>
