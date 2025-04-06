@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SGP_Domain.Entities
+{
+    public class HistorialJuicio
+    {
+        public Guid Id { get; set; }
+        public string ParteDemandante { get; set; } = null!;
+        public string ParteDemandado { get; set; } = null!;
+        public string Ganador { get; set; } = null!;
+        public DateTime Fecha { get; set; }
+    }
+}

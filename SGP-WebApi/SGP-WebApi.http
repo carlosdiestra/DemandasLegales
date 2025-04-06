@@ -1,0 +1,6 @@
+@SGP_WebApi_HostAddress = http://localhost:5078
+
+GET {{SGP_WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
