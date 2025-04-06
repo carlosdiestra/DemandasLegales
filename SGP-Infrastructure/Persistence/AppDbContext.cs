@@ -3,6 +3,7 @@ using SGP_Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,29 +20,30 @@ namespace SGP_Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Contrato>(entity =>
-            {
-                entity.ToTable("Contratos");
-                entity.HasKey(c => c.Id);
-                entity.HasMany(c => c.Firmas).WithOne().HasForeignKey(f => f.ContratoId);
-            });
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Firma>(entity =>
-            {
-                entity.ToTable("Firmas");
-                entity.HasKey(f => f.Id);
-                entity.Property(f => f.Rol).IsRequired().HasMaxLength(1);
-                entity.Property(f => f.Parte).IsRequired();
-            });
+            // Obtiene el ensamblado actual o especifica uno en particular
+            var assemblies = Assembly.GetExecutingAssembly();
 
-            modelBuilder.Entity<HistorialJuicio>(entity =>
+            // Busca todas las clases que implementen IEntityTypeConfiguration<T>
+            var configurationTypes = assemblies.GetTypes()
+                .Where(t => t.GetInterfaces().Any(i =>
+                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)))
+                .ToList();
+
+            foreach (var configType in configurationTypes)
             {
-                entity.ToTable("HistorialJuicio");
-                entity.HasKey(h => h.Id);
-                entity.Property(h => h.ParteDemandante).IsRequired();
-                entity.Property(h => h.ParteDemandado).IsRequired();
-                entity.Property(h => h.Ganador).IsRequired();
-            });
+                // Crear una instancia de la configuración
+                var configInstance = Activator.CreateInstance(configType);
+
+                // Obtener el tipo de entidad al que está configurando
+                var entityType = configType.GetInterfaces()
+                    .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>))
+                    .GenericTypeArguments[0];
+
+                // Registrar la configuración en el ModelBuilder
+                modelBuilder.ApplyConfiguration((dynamic)configInstance);
+            }
         }
     }
 }
