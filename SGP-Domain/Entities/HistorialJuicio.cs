@@ -8,7 +8,7 @@ namespace SGP_Domain.Entities
 {
     public class HistorialJuicio
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string ParteDemandante { get; set; } = null!;
         public string ParteDemandado { get; set; } = null!;
         public string Ganador { get; set; } = null!;

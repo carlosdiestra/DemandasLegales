@@ -58,7 +58,6 @@ namespace SGP_Application.Contracts
             // Guardar historial
             _context.Historiales.Add(new HistorialJuicio
             {
-                Id = Guid.NewGuid(),
                 ParteDemandante = request.ParteDemandante,
                 ParteDemandado = request.ParteDemandado,
                 Ganador = ganador,
