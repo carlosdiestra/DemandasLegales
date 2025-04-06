@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SGP_Application.Contracts
 {
-    public class ResolverJuicioResponse
+    public class ResolveJudgment
     {
-        public string Ganador { get; set; } = null!; // Demandante o Demandado
+        public string Ganador { get; set; } = null!;
         public int PuntosDemandante { get; set; }
         public int PuntosDemandado { get; set; }
     }

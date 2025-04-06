@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SGP_Application.Contracts
 {
-    public class ResolverJuicioRequest : IRequest<ResolverJuicioResponse>
+    public class ResolveJudgmentRequest : IRequest<ResolveJudgmentResponse>
     {
         public string ParteDemandante { get; set; } = null!; // Ej: "KN"
         public string ParteDemandado { get; set; } = null!;  // Ej: "NNV"

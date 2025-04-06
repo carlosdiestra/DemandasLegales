@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SGP_Application.Contracts;
+using SGP_Domain.Rules;
 using SGP_Infrastructure.Persistence;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +16,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddMediatR(cfg =>
 {
-        cfg.RegisterServicesFromAssembly(typeof(ResolverJuicioHandler).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(SGP_Application.Contracts.Handlers.ResolveJudgmentSecondHandler.Handler).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(SGP_Application.Contracts.Handlers.ResolveJudgmentFirstHandler.Handler).Assembly);
 });
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IFirmaRules, FirmaRules>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
