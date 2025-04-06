@@ -45,3 +45,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+// ESTA LÍNEA ES NECESARIA PARA TESTING FUNCIONAL
+public partial class Program { }

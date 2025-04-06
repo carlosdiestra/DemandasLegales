@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>SGP_WebApi</RootNamespace>
+
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
